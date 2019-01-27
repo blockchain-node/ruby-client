@@ -64,7 +64,7 @@ resp = client.eth_getBalance("0xf4c2a25fcbaad4e568fb74d6644b164e999d3132", "late
 Integer(resp[:response]) / 1000000000000000000.0
 ```
 
-[Link to RPC Calls](README-ETH-BTC.md)
+[Link to RPC Calls](README-RPC-ETH.md)
 
 ## Contact
 
