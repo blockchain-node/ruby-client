@@ -5,10 +5,6 @@
 This gem is a secure RPC wrapper to connect to nodes launched by 
 [https://blockchainnode.io](https://blockchainnode.io). 
 
-Provides a Ruby library to the complete Bitcoin JSON-RPC API. Implements all methods listed
-at {https://en.bitcoin.it/wiki/Original_Bitcoin_client/API_Calls_list}[https://en.bitcoin.it/wiki/Original_Bitcoin_client/API_Calls_list].
-Also supports customizing the host and port number to connect to.
-
 ## Installation and Configuration
 
 ```bash
@@ -28,7 +24,7 @@ end
 
 **Security Note:**
 It is recommended that you secure your `CLIENT_ID` and `CLIENT_SECRET` and do not check that into your code repo.
-If your `CLIENT_ID` and `CLIENT_SECRET` are comprimised, your wallet will be secure as long as the it is
+If your `CLIENT_ID` and `CLIENT_SECRET` are comprimised, your wallet will be secure as long as it is
 encrypted and not left unlocked.
 
 
@@ -42,14 +38,22 @@ node_id = "123ABC"
 client = BlockchainNode::Client.new(node_id)
 ```
 
+Make RPC method calls directly. Pass in parameters as args to the method call.
+
+Other helper methods: 
+
+```ruby
+# returns a list of nodes you have running on your account
+client.nodes
+```
+
 ### Bitcoin Example
 
 
-[Link to RPC Calls](README-RPC-BTC.md)
+[List of Bitcoin RPC Calls](README-RPC-BTC.md)
 
 ### Ethereum Example
 
-Make any RPC method call directly. Pass in parameters as args to the method call.
 
 Notice, for geth, responses are returned in hex so they have to be converted to an integer.
 
@@ -66,7 +70,7 @@ resp = client.eth_getBalance("0xf4c2a25fcbaad4e568fb74d6644b164e999d3132", "late
 Integer(resp[:response]) / 1000000000000000000.0
 ```
 
-[Link to RPC Calls](README-RPC-ETH.md)
+[List of Ethereum (geth) RPC Calls](README-RPC-ETH.md)
 
 ## Contact
 
