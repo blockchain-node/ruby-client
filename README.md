@@ -1,5 +1,7 @@
 # BlockchainNode (BCN) Ruby Client
 
+[![Gem Version](https://badge.fury.io/rb/blockchain-node.svg)](https://badge.fury.io/rb/blockchain-node)
+
 This gem is a secure RPC wrapper to connect to nodes launched by 
 [https://blockchainnode.io](https://blockchainnode.io). 
 

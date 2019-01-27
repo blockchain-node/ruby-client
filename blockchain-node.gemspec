@@ -13,6 +13,10 @@ Gem::Specification.new do |s|
   s.authors      = ["Matt Pestritto"]
   s.email        = ["matt@blockchainnode.io"]
   s.homepage     = "https://blockchainnode.io"
+  s.metadata     = {
+    "source_code_uri" => "https://github.com/blockchain-node/ruby-client",
+    "documentation_uri" => "https://github.com/blockchain-node/ruby-client"
+  }
 
   s.files         = Dir["{lib,spec}/**/*", "[A-Z]*"] - ["Gemfile.lock"]
   s.require_paths = ["lib"]
