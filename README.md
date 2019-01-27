@@ -24,7 +24,7 @@ end
 
 **Security Note:**
 It is recommended that you secure your `CLIENT_ID` and `CLIENT_SECRET` and do not check that into your code repo.
-If your `CLIENT_ID` and `CLIENT_SECRET` are comprimised, your wallet will be secure as long as it is
+If your `CLIENT_ID` and `CLIENT_SECRET` are compromised, your wallet will be secure as long as it is
 encrypted and not left unlocked.
 
 
