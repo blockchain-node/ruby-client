@@ -17,10 +17,20 @@ def stub_oauth
     to_return(status: 200, body: OAUTH_RESPONSE.to_json)
 end
 
+def stub_get_node
+  stub_request(:get, "#{BlockchainNode::Request::DEFAULT_BASE_URL}/api/nodes/#{NODE_ID}").
+    to_return(status: 200, body: "{\"id\":\"#{NODE_ID}\",\"blockchain\":\"bitcoin\",\"network\":\"testnet\",\"status\":\"RUNNING\",\"height\":1454086}"  )
+end
+
+def stub_get_nodes
+  stub_request(:get, "#{BlockchainNode::Request::DEFAULT_BASE_URL}/api/nodes").
+    to_return(status: 200, body: "{\"nodes\":[{\"id\":\"#{NODE_ID}\",\"blockchain\":\"bitcoin\",\"network\":\"testnet\",\"status\":\"RUNNING\",\"height\":1454086}]}"  )
+end
+
 def stub_basic_method
   stub_request(:post, "#{BlockchainNode::Request::DEFAULT_BASE_URL}/api/nodes/#{NODE_ID}").
     with(body: api_method_body('eth_blockNumber')).
-    to_return(status: 200, body: '0x123A ')
+    to_return(status: 200, body: '0x123A')
 end
 
 

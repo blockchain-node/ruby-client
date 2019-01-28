@@ -49,6 +49,13 @@ describe BlockchainNode::Configuration do
   end
 
   describe "api calls" do
+    it "should return a list of nodes" do
+      stub_oauth
+      stub_get_nodes
+      client = BlockchainNode::Client.new
+      resp = client.nodes
+      expect(resp["nodes"].first["id"]).to eq(NODE_ID)
+    end
     it "should make a successful API call" do
       stub_oauth
       stub_basic_method
@@ -56,6 +63,21 @@ describe BlockchainNode::Configuration do
       client = BlockchainNode::Client.new(NODE_ID)
       response = client.eth_blockNumber
       expect(Integer(response[:response])).to eq 4666
+    end
+  end
+
+  describe "client instantiation" do
+    it "should allow instantiation without a client id" do
+      client = BlockchainNode::Client.new
+      expect(client.node_id).to be_nil
+
+      expect{client.details}.to raise_error(BlockchainNode::Errors::ClientNotConfigured)
+      client.node_id = NODE_ID
+
+      stub_oauth
+      stub_get_node
+      resp = client.details
+      expect(resp["id"]).to eq(NODE_ID)
     end
   end
 

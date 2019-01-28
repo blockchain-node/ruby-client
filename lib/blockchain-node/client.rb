@@ -4,10 +4,10 @@ module BlockchainNode
     @@_auth_token
     AuthToken = Struct.new(:token, :expires_at)
 
-    attr_reader :node_id
+    attr_accessor :node_id
     attr_accessor :configuration
 
-    def initialize(node_id)
+    def initialize(node_id = nil)
       @node_id = node_id
       # allow a different configuration per client instance
       @configuration = BlockchainNode::Configuration.new
@@ -16,6 +16,10 @@ module BlockchainNode
     # convenience method to get nodes index
     def nodes
       request.get(path: node_index_path, auth_token: auth_token)
+    end
+
+    def details
+      request.get(path: nodes_path, auth_token: auth_token)
     end
 
     def auth_token
@@ -61,6 +65,7 @@ module BlockchainNode
     end
 
     def nodes_path
+      raise Errors::ClientNotConfigured.new("Client Needs to be initialized with a node id.") unless @node_id
       "/api/nodes/#{@node_id}"
     end
 
