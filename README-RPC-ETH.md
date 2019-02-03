@@ -1,6 +1,78 @@
 # Ethereum RPC Methods Calls
 
 
+## Personal
+
+The personal API manages private keys in the key store.
+
+### personal_listAccounts
+
+Returns all the Ethereum account addresses of all keys in the key store.
+
+
+#### Example
+
+``` ruby
+client.personal_listAccounts
+ => ["0x5e97870f263700f46aa00d967821199b9bc5a120", "0x3d80b31a78c30fc628f20b2c89d7ddbf6e53cedc"]
+```
+
+
+
+### personal_newAccount
+
+Generates a new private key and stores it in the key store directory.
+The key file is encrypted with the given passphrase.
+Returns the address of the new account.
+
+#### Parameters
+
+| Name         | Optional  | Description                                |
+| :----------: | --------- | ------------------------------------------ |
+| password     | yes       | The password to use to encrypt the wallet  |
+
+#### Response
+
+The address of the new account.
+
+#### Example
+ 
+``` ruby
+client.personal_newAccount('SecurePassword')
+ => {:response=>"0x4e6f002a07a7e5f74fdaaa6e730557782405fa05"} 
+```
+
+
+## Blockchain Methods
+
+### eth_getBalance
+
+Returns the balance of the account of given address at a given block.
+
+#### Parameters
+
+| Name         | Optional  | Description                                |
+| :----------: | --------- | ------------------------------------------ |
+| address      | no        |  The address to check for balance.  |
+| block        | no        | QUANTITY|TAG - integer block number, or the string "latest", "earliest" or "pending" |
+
+#### Response
+
+`QUANTITY` - integer of the current balance in wei in hex.
+
+
+#### Example
+ 
+``` ruby
+client.eth_getBalance('0x5e97870f263700f46aa00d967821199b9bc5a120', 'latest')
+ => {:response=>"0x4e6f002a07a7e5f74fdaaa6e730557782405fa05"} 
+```
+
+
+
+
+## Reference: ALL ETH / WEB METHODS
+
 ```
 
 web3_clientVersion
