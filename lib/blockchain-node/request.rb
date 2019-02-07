@@ -44,6 +44,7 @@ module BlockchainNode
         http.request(request)
       end
 
+      # puts "RAW RESPONSE: #{response.body}"
       if response.code == "200"
         begin
           JSON.parse(response.body)

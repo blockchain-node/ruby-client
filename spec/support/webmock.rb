@@ -41,3 +41,23 @@ def api_method_body(method, *params)
   }.to_json
 end
 
+# ethereum mocks
+ETHEREUM_ACCOUNT = "0x829bd824b016326a401d083b33d092293333a830"
+ETHEREUM_TRANSACTION = "0x2e9a95887534709e23ba62a54679cfb073b819847be1fd039c1517b851354923"
+def stub_ethereum_list_accounts
+  stub_request(:post, "#{BlockchainNode::Request::DEFAULT_BASE_URL}/api/nodes/#{NODE_ID}").
+    to_return(status: 200, body: "[\"#{ETHEREUM_ACCOUNT}\"]"  )
+end
+def stub_ethereum_balance_of
+  stub_request(:post, "#{BlockchainNode::Request::DEFAULT_BASE_URL}/api/nodes/#{NODE_ID}").
+    to_return(status: 200, body: "0x8ac7230489e80000"  )
+end
+def stub_ethereum_highest_block
+  stub_request(:post, "#{BlockchainNode::Request::DEFAULT_BASE_URL}/api/nodes/#{NODE_ID}").
+    to_return(status: 200, body: "0x4bdfd0"  )
+end
+def stub_ethereum_send
+  stub_request(:post, "#{BlockchainNode::Request::DEFAULT_BASE_URL}/api/nodes/#{NODE_ID}").
+    with(body: '{"method":"eth_sendTransaction","parameters":[{"from":"ACCOUNT1","to":"ACCOUNT2","value":"0xde0b6b3a7640000"}]}').
+    to_return(status: 200, body: ETHEREUM_TRANSACTION  )
+end
