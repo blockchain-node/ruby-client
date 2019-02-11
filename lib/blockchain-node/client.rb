@@ -4,12 +4,13 @@ module BlockchainNode
     @@_auth_token
     AuthToken = Struct.new(:token, :expires_at)
 
+    Details = Struct.new(:id, :blockchain, :network, :status, :height)
+
     attr_accessor :node_id
     attr_accessor :configuration
 
     def initialize(node_id = nil)
       @node_id = node_id
-      # allow a different configuration per client instance
       @configuration = BlockchainNode::Configuration.new
     end
 
@@ -19,7 +20,8 @@ module BlockchainNode
     end
 
     def details
-      request.get(path: nodes_path, auth_token: auth_token)
+      r = request.get(path: nodes_path, auth_token: auth_token)
+      Details.new(r["id"], r["blockchain"], r["network"], r["status"], Integer(r["height"]))
     end
 
     def auth_token
@@ -37,7 +39,7 @@ module BlockchainNode
     end
 
     def auth_token_expired?
-      @@_auth_token.nil? || @@_auth_token.expires_at < Time.now.utc - 30
+      @@_auth_token.nil? || @@_auth_token.expires_at < Time.now.utc + 30
     end
 
     def get_new_auth_token

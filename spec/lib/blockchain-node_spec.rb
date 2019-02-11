@@ -33,18 +33,37 @@ describe BlockchainNode::Configuration do
 
   describe "oauth tokens" do
     it "requests a new token if 1 is expired" do
+      Timecop.travel(Time.new(2019,1,10,12,0,0).utc)
+
       expect_any_instance_of(BlockchainNode::Request).to receive(:process_request).exactly(3).times.and_return(
         {
-          "access_token" => "a9b29c6810ba513f08f87fafadaa6154690f9246aa663b1b708c1c94a5887386",
-          "expires_in"  => 7200, "created_at"  => Time.now.to_i
-        }
+          "access_token" => "token1",
+          "expires_in"  => 7200, "created_at"  => Time.new(2019,1,10,12,0,0).utc.to_i
+        },
+        {
+          "access_token" => "token2",
+          "expires_in"  => 7200, "created_at"  => Time.new(2019,1,10,14,0,0).utc.to_i
+        },
+        {
+          "access_token" => "token3",
+          "expires_in"  => 7200, "created_at"  => Time.new(2019,1,10,15,59,45).utc.to_i
+        },
       )
       client = BlockchainNode::Client.new(NODE_ID)
-      client.auth_token
-      Timecop.travel(Time.now + 7300)
-      client.auth_token
-      Timecop.travel(Time.now + 7200)
-      client.auth_token
+      client.auth_token # should get an initial auth token
+      expect(client.auth_token).to eq("token1")
+
+      Timecop.travel(Time.new(2019,1,10,14,0,0))
+      client.auth_token # should get a new auth token
+      expect(client.auth_token).to eq("token2")
+
+      Timecop.travel(Time.new(2019,1,10,15,59,15))
+      client.auth_token # should NOT get a new token
+      expect(client.auth_token).to eq("token2")
+
+      Timecop.travel(Time.new(2019,1,10,15,59,45))
+      client.auth_token # should get a new auth token
+      expect(client.auth_token).to eq("token3")
     end
   end
 

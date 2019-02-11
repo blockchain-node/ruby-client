@@ -41,12 +41,13 @@ module BlockchainNode
       def transactions_for_account(account, startBlock = nil, endBlock = nil)
         endBlock = highest_block if endBlock.nil?
         startBlock = endBlock - 1000 if startBlock.nil?
+        account.downcase!
 
         found_transactions = []
 
         (startBlock..endBlock).each do |block|
           response = @client.eth_getBlockByNumber(int_to_hex(block), true)
-          found_transactions += response["transactions"].select{ |t| t["from"] == account || t["to"] == account }
+          found_transactions += response["transactions"].select{ |t| t["from"].try(:downcase) == account || t["to"].try(:downcase) == account }
         end
 
         found_transactions
