@@ -21,7 +21,7 @@ module BlockchainNode
 
     def details
       r = request.get(path: nodes_path, auth_token: auth_token)
-      Details.new(r["id"], r["blockchain"], r["network"], r["status"], Integer(r["height"]))
+      Details.new(r["id"], r["blockchain"], r["network"], r["status"], Integer(r["height"] || 0))
     end
 
     def auth_token

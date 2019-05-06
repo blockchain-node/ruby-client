@@ -6,6 +6,7 @@ require_relative 'blockchain-node/version'
 
 require_relative 'blockchain-node/model'
 require_relative 'blockchain-node/model/base'
+require_relative 'blockchain-node/model/bitcoin'
 require_relative 'blockchain-node/model/ethereum'
 
 module BlockchainNode
